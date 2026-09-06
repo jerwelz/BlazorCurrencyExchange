@@ -1,0 +1,70 @@
+.about-page {
+    font-family: "Inter", sans-serif;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 40px 24px;
+    color: #1f2937;
+}
+
+.about-page h1 {
+    font-size: 36px;
+    font-weight: 700;
+    margin-bottom: 4rem;
+}
+
+.about-section {
+    background: white;
+    padding: 24px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 14px rgba(0, 0, 0, 0.08);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.about-section:hover {
+    box-shadow: 0 8px 22px rgba(0, 0, 0, 0.12);
+}
+
+.about-section h2 {
+    font-size: 22px;
+    font-weight: 700;
+    color: cornflowerblue;
+    margin-bottom: 12px;
+}
+
+.about-section p {
+    font-size: 16px;
+    line-height: 1.7;
+    margin-bottom: 12px;
+    color: #4b5563;
+}
+
+.about-section p:last-child {
+    margin-bottom: 0;
+}
+
+#about__github__link {
+    cursor: pointer;
+    font-weight: bold;
+    color: black;
+}
+
+#about__github__link:hover {
+    color: cornflowerblue;
+}
+
+.about__github__container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    }
+
+#about__github__link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+}

@@ -1,0 +1,60 @@
+﻿@page "/about"
+
+<PageTitle>About</PageTitle>
+
+<h1>About</h1>
+
+<section class="about-section">
+    <h2>Currency Exchange</h2>
+
+    <p>
+        Currency Exchange is a Blazor web application for exploring historical exchange rates between the Euro and several international currencies.
+    </p>
+
+    <p>
+        The application allows users to select a currency and different time periods to see how its exchange rate has changed over time. The data is displayed as an interactive chart to make trends and changes easier to understand.
+    </p>
+</section>
+
+<section class="about-section">
+    <h2>Data Source</h2>
+
+    <p>
+        Exchange-rate data is retrieved from the Frankfurter API. The application sends HTTP requests to the API based on the selected currency and time period and processes the returned JSON data before displaying it.
+    </p>
+
+    <p>
+        Frankfurter provides current and historical foreign exchange rate data based on data published by the European Central Bank.
+    </p>
+</section>
+
+<section class="about-section">
+    <h2>Technologies</h2>
+
+    <p>
+        This project was built with C#, .NET and Blazor. Exchange-rate data is retrieved asynchronously using HttpClient, while Blazor-ApexCharts is used to visualise the historical data. The source code is hosted on GitHub.
+    </p>
+       <div class="about__github__container">
+    <a id="about__github__link"
+       href="https://github.com/jerwelz/BlazorCurrencyExchange"
+       target="_blank"
+       rel="noopener noreferrer">
+
+
+        <span>GitHub</span>
+
+        <span class="sidebar-brand__icon" aria-hidden="true">
+                <svg viewBox="0 0 24 24"
+                 focusable="false"
+                 aria-hidden="true">
+                <path d="M12 1.5C6.2 1.5 1.5 6.2 1.5 12c0 4.65 3 8.6 7.15 10.02.52.1.71-.22.71-.5v-1.75c-2.9.63-3.5-1.24-3.5-1.24-.47-1.2-1.15-1.52-1.15-1.52-.94-.64.07-.62.07-.62 1.04.08 1.59 1.07 1.59 1.07.93 1.58 2.45 1.12 3.05.86.09-.67.36-1.12.66-1.38-2.31-.26-4.74-1.15-4.74-5.12 0-1.13.4-2.05 1.06-2.77-.11-.26-.46-1.31.1-2.73 0 0 .86-.28 2.82 1.06a9.7 9.7 0 0 1 5.13 0c1.96-1.34 2.82-1.06 2.82-1.06.56 1.42.21 2.47.1 2.73.66.72 1.06 1.64 1.06 2.77 0 3.98-2.44 4.86-4.75 5.12.37.32.7.95.7 1.92v2.84c0 .28.19.61.72.5A10.5 10.5 0 0 0 22.5 12C22.5 6.2 17.8 1.5 12 1.5z"
+                      fill="black" />
+            </svg>
+        </span>
+
+    </a>
+
+       </div>
+</section>
+
+

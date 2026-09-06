@@ -1,0 +1,23 @@
+﻿@inherits LayoutComponentBase
+@inject IJSRuntime JSRuntime
+
+<div class="page">
+    <aside class="sidebar">
+        <NavMenu />
+    </aside>
+
+    <main class="main-content">
+
+        <article class="content">
+            @Body
+        </article>
+
+        <footer class="footer">
+            <span>Exchange Rates Dashboard</span>
+        </footer>
+    </main>
+</div>
+
+
+@code {
+}

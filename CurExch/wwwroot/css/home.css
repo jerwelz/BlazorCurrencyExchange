@@ -1,0 +1,128 @@
+.chart__container {
+    display: flex;
+    gap: 1rem;
+}
+
+#chart__btn__container {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    align-items: center;
+}
+
+.home-page {
+    width: 100%;
+}
+
+.home-page h1 {
+    margin-bottom: 1.25rem;
+}
+
+.home-page .apexcharts-canvas,
+.home-page .apexcharts-svg {
+    max-width: 100%;
+}
+
+.home-chart-shell {
+    width: 100%;
+    min-height: 600px;
+}
+
+.home-chart-shell .apexcharts-canvas,
+.home-chart-shell .apexcharts-svg {
+    width: 100% !important;
+}
+
+.chart__btn {
+    padding: 0.5rem 1.5rem;
+    flex: 0 1 8rem;
+    outline: none;
+    border: none;
+    border-radius: 8px;
+    background-color: cornflowerblue;
+    color: white;
+    font-weight: bold;
+    font-family: 'Inter', sans-serif;
+    cursor: pointer;
+}
+
+.chart__btn:hover {
+    background-color: #4f83e6;
+}
+
+.chart__btn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(79, 131, 230, 0.25);
+}
+
+.dropdown {
+    position: relative;
+    display: inline-block;
+    flex: 0 1 13rem;
+}
+
+.dropbtn {
+    width: 100%;
+    background-color: seagreen;
+    color: white;
+    padding: 10px 16px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+}
+
+.dropbtn:hover {
+    background-color: #2f8a57;
+}
+
+.dropbtn:focus-visible {
+    box-shadow: 0 0 0 3px rgba(47, 138, 87, 0.25);
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    left: 0;
+    right: 0;
+    min-width: 160px;
+    width: 100%;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    z-index: 10;
+    font-family: 'Inter', sans-serif;
+    font-weight: bold;
+}
+
+.dropdown-content button {
+    display: block;
+    width: 100%;
+    padding: 10px 16px;
+    border: none;
+    background: none;
+    color: #222;
+    text-decoration: none;
+    text-align: left;
+    font: inherit;
+    cursor: pointer;
+}
+
+.dropdown-content button:hover {
+    background-color: seagreen;
+}
+
+.dropdown-content button:focus-visible {
+    outline: 2px solid #258cfb;
+    outline-offset: -2px;
+}
+
+.dropdown:hover .dropdown-content {
+    display: block;
+}
+
+.dropdown:hover .dropbtn {
+    background-color: seagreen;
+}

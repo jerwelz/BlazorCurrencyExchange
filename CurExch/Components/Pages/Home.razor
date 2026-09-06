@@ -1,0 +1,230 @@
+﻿@page "/"
+@rendermode InteractiveServer
+@implements IDisposable
+
+@using System.Text.Json
+@using System.Text.Json.Serialization
+@using CurExch.Models
+
+@inject IHttpClientFactory ClientFactory
+
+<PageTitle>Currency Exchange</PageTitle>
+
+<div class="main__container home-page">
+
+    <h1>
+        Frankfurter Exchange Rates
+    </h1>
+
+    <div id="chart__btn__container">
+
+        <button class="chart__btn"
+                disabled="@(!chartReady)"
+                @onclick="() => ReloadData(7)">
+            7D
+        </button>
+
+        <button class="chart__btn"
+                disabled="@(!chartReady)"
+                @onclick="() => ReloadData(30)">
+            30D
+        </button>
+
+        <button class="chart__btn"
+                disabled="@(!chartReady)"
+                @onclick="() => ReloadData(90)">
+            90D
+        </button>
+
+        <button class="chart__btn"
+                disabled="@(!chartReady)"
+                @onclick="() => ReloadData(365)">
+            1Y
+        </button>
+
+        <div class="dropdown">
+
+            <button class="dropbtn"
+                    disabled="@(!chartReady)">
+                Currency: @selectedCurrency
+            </button>
+
+            <div class="dropdown-content">
+
+                <button type="button"
+                        @onclick='() => SetCurrency("USD")'>
+                    USD
+                </button>
+
+                <button type="button"
+                        @onclick='() => SetCurrency("GBP")'>
+                    GBP
+                </button>
+
+                <button type="button"
+                        @onclick='() => SetCurrency("JPY")'>
+                    JPY
+                </button>
+
+                <button type="button"
+                        @onclick='() => SetCurrency("CHF")'>
+                    CHF
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="home-chart-shell">
+
+        @if (!chartReady)
+        {
+            <p>Loading chart data...</p>
+        }
+        else
+        {
+            <ApexChart TItem="CurrencyExchange"
+                       Title="@($"EUR → {selectedCurrency}")"
+                       Height="@("600")"
+                       Width="@("100%")"
+                       Options="chartOptions"
+                       @key="chartKey">
+
+                <ApexPointSeries TItem="CurrencyExchange"
+                                 Items="exchangeRates"
+                                 Name="@($"EUR/{selectedCurrency}")"
+                                 SeriesType="SeriesType.Line"
+                                 XValue="e => e.Date"
+                                 YValue="e => e.Rate" />
+
+            </ApexChart>
+        }
+
+    </div>
+
+</div>
+
+@code {
+
+    private List<CurrencyExchange> exchangeRates = [];
+
+    private readonly ApexChartOptions<CurrencyExchange> chartOptions = new()
+    {
+        Legend = new Legend
+        {
+            Show = false
+        }
+    };
+
+    private string selectedCurrency = "USD";
+    private int selectedDays = 90;
+
+    private bool chartReady;
+    private Guid chartKey = Guid.NewGuid();
+
+    private readonly CancellationTokenSource cancellationTokenSource = new();
+
+
+    protected override async Task OnInitializedAsync()
+    {
+        chartReady = false;
+
+        try
+        {
+            exchangeRates = await LoadRates(
+                selectedDays,
+                cancellationTokenSource.Token);
+
+            chartKey = Guid.NewGuid();
+            chartReady = true;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+
+    private async Task ReloadData(int days)
+    {
+        if (!chartReady)
+            return;
+
+        chartReady = false;
+
+        try
+        {
+            exchangeRates = await LoadRates(
+                days,
+                cancellationTokenSource.Token);
+
+            chartKey = Guid.NewGuid();
+            chartReady = true;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+
+    private async Task SetCurrency(string currency)
+    {
+        if (!chartReady)
+            return;
+
+        chartReady = false;
+
+        selectedCurrency = currency;
+
+        try
+        {
+            exchangeRates = await LoadRates(
+                selectedDays,
+                cancellationTokenSource.Token);
+
+            chartKey = Guid.NewGuid();
+            chartReady = true;
+        }
+        catch (OperationCanceledException)
+        {
+        }
+    }
+
+
+    private async Task<List<CurrencyExchange>> LoadRates(
+        int days,
+        CancellationToken cancellationToken)
+    {
+        var client =
+            ClientFactory.CreateClient("FrankfurterClient");
+
+        selectedDays = days;
+
+        string fromDate = DateTime.Today
+            .AddDays(-days)
+            .ToString("yyyy-MM-dd");
+
+        using HttpResponseMessage response =
+            await client.GetAsync(
+                $"https://api.frankfurter.dev/v2/rates?base=EUR&quotes={selectedCurrency}&from={fromDate}",
+                cancellationToken);
+
+        response.EnsureSuccessStatusCode();
+
+        string responseBody =
+            await response.Content.ReadAsStringAsync(
+                cancellationToken);
+
+        return JsonSerializer.Deserialize<List<CurrencyExchange>>(
+            responseBody) ?? [];
+    }
+
+
+    public void Dispose()
+    {
+        cancellationTokenSource.Cancel();
+        cancellationTokenSource.Dispose();
+    }
+
+}
